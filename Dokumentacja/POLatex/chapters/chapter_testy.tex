@@ -1,0 +1,28 @@
+\chapter{Testowanie aplikacji}
+\label{ch:testy}
+
+Testowanie aplikacji przeprowadzono r\k{e}cznie, sprawdzaj\k{a}c poprawno\'{s}\'{c}
+dzia\l{}ania g\l{}\'{o}wnych funkcji systemu.
+
+\begin{table}[H]
+\centering
+\caption{Scenariusze testowania aplikacji}
+\label{tab:testy}
+\begin{tabularx}{\linewidth}{|X|X|l|}
+\hline
+\textbf{Scenariusz} & \textbf{Oczekiwany rezultat} & \textbf{Wynik} \\
+\hline
+Logowanie z~b\l{}\k{e}dnymi danymi & Komunikat ,,Niepoprawny login lub has\l{}o'' & OK \\
+\hline
+Dodanie kursanta z~b\l{}\k{e}dnym numerem PESEL & Komunikat o~nieprawid\l{}owym numerze PESEL & OK \\
+\hline
+Dodanie kursanta z~ju\.{z} istniej\k{a}cym loginem & Komunikat o~zaj\k{e}tym loginie & OK \\
+\hline
+Rezerwacja jazdy na termin z~przesz\l{}o\'{s}ci & Komunikat o~nieprawid\l{}owym terminie & OK \\
+\hline
+Pr\'{o}ba usuni\k{e}cia kursanta z~zaplanowanymi jazdami & Blokada usuni\k{e}cia z~komunikatem & OK \\
+\hline
+\end{tabularx}
+\end{table}
+
+Wszystkie przetestowane scenariusze dzia\l{}aj\k{a} zgodnie z~oczekiwaniami.

@@ -1,0 +1,95 @@
+\chapter{Architektura i struktura aplikacji}
+\label{ch:architektura}
+
+\section{Og\'{o}lna struktura warstwowa}
+
+Aplikacja podzielona jest na trzy logiczne warstwy zgodnie ze wzorcem
+Model--View--ViewModel~(MVVM):
+
+\begin{itemize}
+  \item \textbf{Warstwa modelu} -- klasy encji Entity~Framework mapowane na tabele bazy
+        danych (\texttt{Models/}): \texttt{Kursant}, \texttt{Instruktor}, \texttt{Pojazd},
+        \texttt{Administrator}, \texttt{RezerwacjaJazdy}.
+  \item \textbf{Warstwa widoku} -- pliki XAML i~ich~\emph{code-behind} (\texttt{Views/}):
+        okna i~kontrolki u\.{z}ytkownika.
+  \item \textbf{Warstwa ViewModel} -- klasy dziedzicz\k{a}ce po \texttt{ViewModelBase}
+        (\texttt{ViewModels/}): logika biznesowa, walidacja, komunikacja z~baz\k{a}.
+\end{itemize}
+
+Komunikacja pomi\k{e}dzy widokiem a~ViewModel odbywa si\k{e} przez mechanizm
+\textbf{wi\k{a}za\'{n} danych}~(data binding) WPF oraz wzorzec polece\'{n}
+\texttt{ICommand} zrealizowany klas\k{a} \texttt{RelayCommand}.
+
+\section{Diagram pakiet\'{o}w}
+
+\begin{table}[H]
+\centering
+\caption{Struktura katalog\'{o}w projektu}
+\label{tab:struktura}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Katalog} & \textbf{Zawarto\'{s}\'{c}} \\
+\hline
+\texttt{Models/}      & Klasy encji (5 plik\'{o}w) \\
+\texttt{Data/}        & \texttt{OskDbContext} -- kontekst EF Core \\
+\texttt{ViewModels/}  & 5 klas ViewModel + \texttt{ViewModelBase} + \texttt{RelayCommand} \\
+\texttt{Views/}       & Okna~XAML i~code-behind (7 plik\'{o}w) \\
+\texttt{Migrations/}  & Migracje EF Core (historia schematu bazy) \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Przep\l{}yw sterowania}
+
+Po uruchomieniu aplikacji wy\'{s}wietlane jest okno logowania.
+Po pomy\'{s}lnym uwierzytelnieniu otwierane jest g\l{}\'{o}wne okno aplikacji,
+kt\'{o}re w~zale\.{z}no\'{s}ci od roli u\.{z}ytkownika wy\'{s}wietla odpowiednie
+opcje menu i~wczytuje odpowiedni widok do centralnego obszaru.
+
+Klikni\k{e}cie przycisku menu podmienia zawarto\'{s}\'{c} obszaru roboczego na jeden
+z~widok\'{o}w: kursanci, instruktorzy, pojazdy lub rezerwacje.
+Ka\.{z}dy widok \l{}aduje niezb\k{e}dne dane z~bazy przy swojej inicjalizacji.
+
+\section{Wzorzec MVVM w projekcie}
+
+Zastosowanie wzorca MVVM pozwala na wyra\'{z}ne rozdzielenie interfejsu graficznego
+od logiki aplikacji. Dzi\k{e}ki temu zmiany w~wygl\k{a}dzie okna nie wp\l{}ywaj\k{a}
+na logik\k{e} dzia\l{}ania programu i~odwrotnie. Przyciski w~oknach s\k{a}
+bezpo\'{s}rednio powi\k{a}zane z~odpowiednimi akcjami w~kodzie, bez
+dodatkowego kodu po\'{s}rednicz\k{a}cego.
+
+\section{Diagram klas}
+
+Poni\.{z}szy diagram przedstawia hierarchi\k{e} dziedziczenia w~projekcie.
+Klasa \texttt{ViewModelBase} jest klas\k{a} bazow\k{a}, po kt\'{o}rej
+dziedzicz\k{a} wszystkie ViewModele. Klasa \texttt{RelayCommand} realizuje
+interfejs \texttt{ICommand}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{img/diagram_klas}
+  \caption{Diagram klas}
+  \label{fig:diagram_klas}
+\end{figure}
+
+\section{Mechanizmy walidacji danych}
+
+Walidacja danych wej\'{s}ciowych odbywa si\k{e} w~warstwie ViewModel,
+przed wykonaniem jakiejkolwiek operacji na bazie danych. Sprawdzane s\k{a}:
+\begin{itemize}
+  \item poprawno\'{s}\'{c} numeru PESEL (d\l{}ugo\'{s}\'{c}, cyfry, suma kontrolna),
+  \item unikalno\'{s}\'{c} loginu i~numeru PESEL w~bazie danych,
+  \item wype\l{}nienie wszystkich wymaganych p\'{o}l formularza,
+  \item warto\'{s}\'{c} daty rezerwacji -- termin nie mo\.{z}e by\'{c} z~przesz\l{}o\'{s}ci.
+\end{itemize}
+
+W~przypadku b\l{}\k{e}du u\.{z}ytkownik otrzymuje czytelny komunikat opisuj\k{a}cy
+przyczyn\k{e} problemu, a~operacja nie jest wykonywana.
+
+\section{Obs\l{}uga b\l{}\k{e}d\'{o}w i~wyj\k{a}tk\'{o}w}
+
+Operacje bazodanowe s\k{a} opakowane w~bloki \texttt{try-catch}, dzi\k{e}ki czemu
+wyj\k{a}tki (np. b\l{}\k{a}d po\l{}\k{a}czenia z~baz\k{a} lub naruszenie
+klucza obcego) s\k{a} przechwytywane i~prezentowane u\.{z}ytkownikowi
+w~postaci okna dialogowego z~opisem problemu, zamiast powodowa\'{c}
+awari\k{e} aplikacji.

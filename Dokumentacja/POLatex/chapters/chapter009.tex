@@ -1,0 +1,40 @@
+\chapter{Instrukcja uruchomienia projektu}
+\label{ch:instrukcja}
+
+\section{Wymagania systemowe}
+
+Do uruchomienia aplikacji niezb\k{e}dne s\k{a}:
+\begin{itemize}
+  \item System operacyjny: Windows 10 lub Windows 11 (64-bitowy),
+  \item \textbf{.NET 10 Runtime} -- dost\k{e}pny na \texttt{https://dot.net/download},
+  \item \textbf{SQL Server LocalDB 2019/2022} -- instalowany razem z~Visual Studio
+        lub oddzielnie jako cz\k{e}\'{s}\'{c} paczki \emph{SQL Server Express LocalDB}.
+\end{itemize}
+
+\section{Uruchomienie aplikacji}
+
+\begin{enumerate}
+  \item Otworzy\'{c} plik \texttt{OskSystem.sln} w~Visual Studio~2022.
+  \item Klikn\k{a}\'{c} \textbf{Start} (F5).
+  \item Przy pierwszym uruchomieniu baza danych zostanie utworzona automatycznie.
+\end{enumerate}
+
+\section{Dane logowania}
+
+Aplikacja jest wst\k{e}pnie skonfigurowana z~domy\'{s}lnym kontem administratora:
+
+\begin{table}[H]
+\centering
+\caption{Domy\'{s}lne dane logowania}
+\label{tab:logowanie}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Rola} & \textbf{Login} & \textbf{Has\l{}o} \\
+\hline
+Administrator & \texttt{admin} & \texttt{admin} \\
+\hline
+\end{tabular}
+\end{table}
+
+Konta kursant\'{o}w i~instruktor\'{o}w tworzone s\k{a} przez administratora
+z~poziomu aplikacji po pierwszym zalogowaniu.

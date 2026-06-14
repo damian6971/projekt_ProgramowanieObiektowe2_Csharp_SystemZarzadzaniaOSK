@@ -1,0 +1,82 @@
+\chapter{Wymagania systemowe}
+\label{ch:wymagania}
+
+\section{Wymagania funkcjonalne}
+
+Wymagania funkcjonalne okre\'{s}laj\k{a} konkretne zachowania systemu z~perspektywy
+ka\.{z}dej z~tr\'{o}jki r\'{o}l u\.{z}ytkownik\'{o}w.
+
+\subsection{Administrator}
+\begin{itemize}
+  \item Logowanie do systemu przy u\.{z}yciu loginu i~has\l{}a.
+  \item Dodawanie, edytowanie i~usuwanie kursant\'{o}w (imi\k{e}, nazwisko, PESEL, login,
+        has\l{}o, kategoria prawa jazdy).
+  \item Dodawanie, edytowanie i~usuwanie instruktor\'{o}w (imi\k{e}, nazwisko, numer
+        legitymacji, telefon, login, has\l{}o, uprawnienia do kategorii).
+  \item Dodawanie, edytowanie i~usuwanie pojazd\'{o}w (marka, model, numer rejestracyjny,
+        kategoria).
+  \item Przegl\k{a}danie pe\l{}nego kalendarza rezerwacji z~mo\.{z}liwo\'{s}ci\k{a}
+        filtrowania po kursancie, instruktorze i~poje\'{z}dzie.
+  \item Rezerwowanie i~anulowanie jazd w~imieniu dowolnego kursanta.
+\end{itemize}
+
+\subsection{Instruktor}
+\begin{itemize}
+  \item Logowanie do systemu.
+  \item Przegl\k{a}danie w\l{}asnego grafiku na bie\.{z}\k{a}cy tydzie\'{n} i~tygodnie
+        s\k{a}siednie.
+  \item Anulowanie w\l{}asnych zarezerwowanych jazd.
+\end{itemize}
+
+\subsection{Kursant}
+\begin{itemize}
+  \item Logowanie do systemu.
+  \item Przegl\k{a}danie kalendarza dost\k{e}pnych termin\'{o}w jazd.
+  \item Rezerwowanie wolnego terminu jazdy.
+  \item Anulowanie w\l{}asnej zarezerwowanej jazdy.
+\end{itemize}
+
+\section{Za\l{}o\.{z}enia dotycz\k{a}ce dzia\l{}ania systemu}
+
+\begin{itemize}
+  \item Aplikacja przeznaczona jest do u\.{z}ytku lokalnego na jednym komputerze
+        z~systemem Windows.
+  \item Ka\.{z}dy u\.{z}ytkownik musi si\k{e} zalogowa\'{c} -- dost\k{e}p bez
+        logowania nie jest mo\.{z}liwy.
+  \item Dane przechowywane s\k{a} w~lokalnej bazie danych -- nie jest wymagane
+        po\l{}\k{a}czenie z~internetem.
+  \item Aplikacja obs\l{}uguje jednocze\'{s}nie jedn\k{a} aktywn\k{a} sesj\k{e}
+        u\.{z}ytkownika.
+  \item Baza danych tworzona jest automatycznie przy pierwszym uruchomieniu.
+\end{itemize}
+
+\section{Wymagania niefunkcjonalne}
+
+\begin{table}[H]
+\centering
+\caption{Wymagania niefunkcjonalne systemu}
+\label{tab:wymagania_nf}
+\begin{tabularx}{\linewidth}{|l|X|}
+\hline
+\textbf{Kategoria} & \textbf{Opis} \\
+\hline
+Bezpiecze\'{n}stwo &
+  Has\l{}a u\.{z}ytkownik\'{o}w s\k{a} przechowywane w~zaszyfrowanej formie.
+  Loginy musz\k{a} by\'{c} unikalne w~obr\k{e}bie ka\.{z}dej roli (kursanci, instruktorzy, administratorzy osobno). Numery PESEL musz\k{a} by\'{c} unikalne w\'{s}r\'{o}d kursant\'{o}w. \\
+\hline
+Niezawodno\'{s}\'{c} &
+  B\l{}\k{e}dy s\k{a} przechwytywane i~komunikowane u\.{z}ytkownikowi
+  w~formie czytelnych komunikat\'{o}w. \\
+\hline
+Wydajno\'{s}\'{c} &
+  Czas odpowiedzi interfejsu poni\.{z}ej~1~sekundy dla typowych operacji. \\
+\hline
+Przenoszalno\'{s}\'{c} &
+  Aplikacja dzia\l{}a na systemie Windows~10 i~Windows~11. \\
+\hline
+Utrzymywalno\'{s}\'{c} &
+  Kod aplikacji jest podzielony na warstwy, co u\l{}atwia rozbudow\k{e}
+  o~nowe funkcje. \\
+\hline
+\end{tabularx}
+\end{table}

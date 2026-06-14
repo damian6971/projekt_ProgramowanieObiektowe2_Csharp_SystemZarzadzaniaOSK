@@ -1,0 +1,51 @@
+\chapter{Podsumowanie i wnioski}
+\label{ch:podsumowanie}
+
+\section{Ocena realizacji celu}
+
+Wszystkie za\l{}o\.{z}one cele projektowe zosta\l{}y osi\k{a}gni\k{e}te.
+Aplikacja umo\.{z}liwia pe\l{}ne zarz\k{a}dzanie o\'{s}rodkiem szkolenia
+kierowc\'{o}w w~zakresie obs\l{}ugi kursant\'{o}w, instruktor\'{o}w,
+pojazd\'{o}w oraz rezerwacji jazd. System dzia\l{}a poprawnie dla trzech r\'{o}l
+u\.{z}ytkownik\'{o}w.
+
+\section{Wnioski}
+
+\begin{itemize}
+  \item Podzia\l{} aplikacji na warstwy znacz\k{a}co u\l{}atwia rozbudow\k{e}
+        i~wprowadzanie zmian -- modyfikacja jednej cz\k{e}\'{s}ci nie wp\l{}ywa
+        na pozosta\l{}e.
+  \item U\.{z}ycie gotowych bibliotek do obs\l{}ugi bazy danych i~szyfrowania hase\l{}
+        pozwoli\l{}o skupi\'{c} si\k{e} na funkcjonalno\'{s}ciach aplikacji zamiast
+        na niskopoziomowych detalach technicznych.
+\end{itemize}
+
+\section{Napotkane problemy}
+
+\begin{itemize}
+  \item \textbf{Kalendarz rezerwacji} -- budowa siatki tygodniowej z~dynamicznym
+        kolorowaniem termin\'{o}w okaza\l{}a si\k{e} najtrudniejsz\k{a} cz\k{e}\'{s}ci\k{a}
+        projektu. Wymaga\l{}a odpowiedniego generowania komponent\'{o}w UI w~kodzie
+        oraz obs\l{}ugi filtrowania danych w~czasie rzeczywistym.
+  \item \textbf{Integralno\'{s}\'{c} danych} -- obs\l{}uga pr\'{o}by usuni\k{e}cia
+        rekordu powi\k{a}zanego z~rezerwacjami wymaga\l{}a dodatkowej walidacji
+        po stronie aplikacji, poniewa\.{z} sam komunikat bazodanowy nie by\l{}
+        wystarczaj\k{a}co czytelny dla u\.{z}ytkownika.
+\end{itemize}
+
+\section{Mo\.{z}liwo\'{s}ci rozbudowy}
+
+W~przysz\l{}o\'{s}ci aplikacja mo\.{z}e zosta\'{c} rozszerzona o:
+\begin{itemize}
+  \item modu\l{} p\l{}atno\'{s}ci i~generowania faktur za kursy,
+  \item raporty i~statystyki eksportowane do PDF lub Excel,
+  \item powiadomienia e-mail lub SMS o~zaplanowanych jazdach,
+  \item wersj\k{e} webow\k{a} dost\k{e}pn\k{a} z~przegl\k{a}darki.
+\end{itemize}
+
+\section{Podsumowanie}
+
+Projekt stanowi pe\l{}nofunkcjonaln\k{a} aplikacj\k{e} do zarz\k{a}dzania
+o\'{s}rodkiem szkolenia kierowc\'{o}w, zrealizowan\k{a} z~u\.{z}yciem technologii
+poznanych podczas zaj\k{e}\'{c}. Aplikacja jest gotowa do u\.{z}ycia
+i~stanowi dobr\k{a} podstaw\k{e} do dalszej rozbudowy.

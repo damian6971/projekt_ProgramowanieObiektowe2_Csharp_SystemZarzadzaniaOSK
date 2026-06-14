@@ -1,0 +1,45 @@
+\chapter{Harmonogram realizacji projektu}
+\label{ch:harmonogram}
+
+Prace nad projektem prowadzone by\l{}y w~trakcie semestru letniego roku
+akademickiego 2025/2026. Tabela~\ref{tab:harmonogram} przedstawia podzia\l{}
+zada\'{n} na etapy wraz z~przybli\.{z}onym czasem realizacji.
+
+Rysunek~\ref{fig:gantt} przedstawia te same etapy w~formie diagramu Gantta.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{img/gantt}
+  \caption{Diagram Gantta harmonogramu realizacji projektu}
+  \label{fig:gantt}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Harmonogram realizacji projektu}
+\label{tab:harmonogram}
+\begin{tabularx}{\linewidth}{|c|X|c|}
+\hline
+\textbf{Etap} & \textbf{Zakres prac} & \textbf{Czas (tygodnie)} \\
+\hline
+1 & Analiza wymaga\'{n}, dobor technologii, konfiguracja \'{s}rodowiska & 1 \\
+\hline
+2 & Projekt bazy danych, definicja modeli EF Core, pierwsze migracje & 1 \\
+\hline
+3 & Implementacja warstwy danych i~ViewModeli kursant\'{o}w, instruktor\'{o}w
+    i~pojazd\'{o}w & 2 \\
+\hline
+4 & Implementacja kalendarza rezerwacji (ViewModel + widok XAML) & 2 \\
+\hline
+5 & Implementacja logowania i~kontroli dost\k{e}pu ról & 1 \\
+\hline
+6 & Testy funkcjonalne, naprawa b\l{}\k{e}d\'{o}w, refaktoryzacja & 1 \\
+\hline
+7 & Bezpiecze\'{n}stwo: bcrypt, walidacja PESEL, TOCTOU, indeksy unikalne & 1 \\
+\hline
+8 & Pisanie dokumentacji, ko\'{n}cowa weryfikacja & 1 \\
+\hline
+\multicolumn{2}{|r|}{\textbf{\l{}\k{a}cznie:}} & \textbf{10} \\
+\hline
+\end{tabularx}
+\end{table}

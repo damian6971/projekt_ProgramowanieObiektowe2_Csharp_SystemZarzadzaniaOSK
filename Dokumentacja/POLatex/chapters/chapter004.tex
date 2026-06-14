@@ -1,0 +1,50 @@
+\chapter{Technologie wykorzystane w projekcie}
+\label{ch:technologie}
+
+\section{Technologie interfejsu u\.{z}ytkownika}
+
+Interfejs graficzny zosta\l{} zrealizowany przy u\.{z}yciu technologii
+\textbf{Windows Presentation Foundation (WPF)}. Uk\l{}ady wizualne
+zdefiniowano w~j\k{e}zyku \textbf{XAML}, co pozwala na \l{}atw\k{a}
+modyfikacj\k{e} wygl\k{a}du bez ingerencji w~logik\k{e} aplikacji.
+WPF zosta\l{} wybrany ze wzgl\k{e}du na dojrza\l{}o\'{s}\'{c} platformy,
+bogaty zestaw kontrolek i~natywne wsparcie dla wzorca MVVM.
+
+\section{Technologie dost\k{e}pu do danych}
+
+Dost\k{e}p do bazy danych zapewnia \textbf{Entity~Framework~Core}
+w~podej\'{s}ciu \emph{Code First}. Struktura bazy danych definiowana jest
+bezpo\'{s}rednio w~kodzie C\# jako klasy modeli, a~narz\k{e}dzie
+automatycznie generuje i~stosuje migracje schematu. Wyb\'{o}r EF~Core
+pozwoli\l{} unikn\k{a}\'{c} pisania surowych zapyta\'{n} SQL i~przyspieszy\l{}
+implementacj\k{e} operacji na danych.
+
+Jako silnik bazy danych zastosowano \textbf{SQL~Server~LocalDB}, kt\'{o}ry
+nie wymaga instalacji pe\l{}nego serwera. Baza dzia\l{}a lokalnie na komputerze
+u\.{z}ytkownika, co upraszcza wdro\.{z}enie aplikacji.
+
+\section{Dodatkowe biblioteki}
+
+Do szyfrowania hase\l{} u\.{z}yto biblioteki \textbf{BCrypt.Net-Next}.
+Has\l{}a nigdy nie s\k{a} przechowywane w~formie jawnej -- zapisywany jest
+wy\l{}\k{a}cznie wynik funkcji skr\'{o}tu. BCrypt.Net zosta\l{} wybrany
+jako powszechnie stosowany standard zabezpieczania hase\l{} w~aplikacjach.
+
+\section{Narz\k{e}dzia deweloperskie}
+
+\begin{table}[H]
+\centering
+\caption{Narz\k{e}dzia u\.{z}yte w~projekcie}
+\label{tab:narzedzia}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Narz\k{e}dzie} & \textbf{Zastosowanie} \\
+\hline
+Visual Studio 2022  & G\l{}\'{o}wne \'{s}rodowisko programistyczne (IDE) \\
+.NET 10 SDK         & Platforma uruchomieniowa i~kompilator C\# \\
+Git                 & Kontrola wersji kodu \'{z}r\'{o}d\l{}owego \\
+NuGet               & Zarz\k{a}dzanie bibliotekami zewn\k{e}trznymi \\
+SQL Server LocalDB  & Lokalna baza danych \\
+\hline
+\end{tabular}
+\end{table}

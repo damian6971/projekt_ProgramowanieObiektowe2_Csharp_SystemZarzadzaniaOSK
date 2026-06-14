@@ -1,0 +1,219 @@
+\chapter{Prezentacja warstwy u\.{z}ytkowej projektu}
+\label{ch:interfejs}
+
+Rozdzia\l{} przedstawia wygl\k{a}d i~dzia\l{}anie kolejnych ekran\'{o}w aplikacji
+wraz z~opisem najwa\.{z}niejszych funkcjonalno\'{s}ci dost\k{e}pnych dla ka\.{z}dej
+z~tr\'{o}jki r\'{o}l u\.{z}ytkownik\'{o}w.
+
+% -----------------------------------------------------------------------
+\section{Ekran logowania}
+% -----------------------------------------------------------------------
+
+Po uruchomieniu aplikacji wy\'{s}wietlane jest okno logowania (rys.~\ref{fig:login}).
+U\.{z}ytkownik wybiera swoj\k{a} rol\k{e} z~listy rozwijanej
+(\textit{Administrator}, \textit{Instruktor}, \textit{Kursant}),
+wpisuje login oraz has\l{}o i~klika przycisk \textbf{Zaloguj}.
+W~przypadku b\l{}\k{e}dnych danych wy\'{s}wietlany jest komunikat
+,,Niepoprawny login lub has\l{}o!''.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.72\textwidth]{img/login}
+  \caption{Ekran logowania}
+  \label{fig:login}
+\end{figure}
+
+% -----------------------------------------------------------------------
+\section{G\l{}\'{o}wne okno aplikacji}
+% -----------------------------------------------------------------------
+
+Po zalogowaniu si\k{e} jako administrator widoczne s\k{a} wszystkie cztery
+przyciski menu bocznego (rys.~\ref{fig:main_admin}).
+Kursant i~instruktor widz\k{a} wy\l{}\k{a}cznie przycisk w\l{}asnych
+rezerwacji lub grafiku -- pozosta\l{}e opcje s\k{a} ukryte.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{img/main_admin}
+  \caption{G\l{}\'{o}wne okno aplikacji -- widok administratora}
+  \label{fig:main_admin}
+\end{figure}
+
+% -----------------------------------------------------------------------
+\section{Modu\l{} zarz\k{a}dzania kursantami}
+% -----------------------------------------------------------------------
+
+Lista kursant\'{o}w wy\'{s}wietlana jest w~formie tabeli
+(rys.~\ref{fig:kursanci}). Dla ka\.{z}dego wiersza dost\k{e}pne s\k{a}
+przyciski \textbf{Edytuj} i~\textbf{Usu\'{n}}.
+Klikni\k{e}cie \textbf{Dodaj kursanta} otwiera modalne okno dialogowe
+(rys.~\ref{fig:kursanci_dodaj}) z~formularzem: imi\k{e}, nazwisko, PESEL,
+login, has\l{}o oraz kategoria prawa jazdy.
+Przed zapisem sprawdzana jest poprawno\'{s}\'{c} numeru PESEL
+(algorytm sumy kontrolnej) oraz unikalno\'{s}\'{c} loginu i~numeru PESEL w~bazie.
+Pr\'{o}ba wpisania b\l{}\k{e}dnego numeru PESEL skutkuje komunikatem
+przedstawionym na rysunku~\ref{fig:walidacja}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{img/kursanci}
+  \caption{Lista kursant\'{o}w}
+  \label{fig:kursanci}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{img/kursanci_dodaj}
+  \caption{Formularz dodawania kursanta}
+  \label{fig:kursanci_dodaj}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{img/walidacja}
+  \caption{Komunikat b\l{}\k{e}du walidacji numeru PESEL}
+  \label{fig:walidacja}
+\end{figure}
+
+% -----------------------------------------------------------------------
+\section{Modu\l{} zarz\k{a}dzania instruktorami}
+% -----------------------------------------------------------------------
+
+Modu\l{} instruktor\'{o}w (rys.~\ref{fig:instruktorzy}) jest analogiczny do
+modu\l{}u kursant\'{o}w. Formularz dodawania (rys.~\ref{fig:instruktorzy_dodaj})
+zawiera dodatkowo pole numeru legitymacji, numeru telefonu oraz checkboksy
+kategorii uprawnie\'{n} (\texttt{A}, \texttt{B}, \texttt{C}, \texttt{D} i~inne).
+Przy edycji pole has\l{}a pozostaje puste -- brak zmiany oznacza zachowanie
+dotychczasowego has\l{}a.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{img/instruktorzy}
+  \caption{Lista instruktor\'{o}w}
+  \label{fig:instruktorzy}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{img/instruktorzy_dodaj}
+  \caption{Formularz dodawania instruktora z~checkboksami uprawnie\'{n}}
+  \label{fig:instruktorzy_dodaj}
+\end{figure}
+
+% -----------------------------------------------------------------------
+\section{Modu\l{} zarz\k{a}dzania pojazdami}
+% -----------------------------------------------------------------------
+
+Ekran pojazd\'{o}w (rys.~\ref{fig:pojazdy}) umo\.{z}liwia dodawanie,
+edycj\k{e} i~usuwanie pojazd\'{o}w szkoleniowych.
+Formularz (rys.~\ref{fig:pojazdy_dodaj}) zawiera pola: marka, model,
+numer rejestracyjny oraz kategoria pojazdu.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{img/pojazdy}
+  \caption{Lista pojazd\'{o}w}
+  \label{fig:pojazdy}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{img/pojazdy_dodaj}
+  \caption{Formularz dodawania pojazdu}
+  \label{fig:pojazdy_dodaj}
+\end{figure}
+
+% -----------------------------------------------------------------------
+\section{Modu\l{} kalendarza rezerwacji}
+% -----------------------------------------------------------------------
+
+Kalendarz tygodniowy (rys.~\ref{fig:kalendarz_admin}) wy\'{s}wietla siatk\k{e}
+slot\'{o}w godzinowych w~zakresie 8:00--18:00 dla siedmiu dni.
+Kolory kom\'{o}rek informuj\k{a} o~statusie slotu:
+zielony -- w\l{}asna jazda zalogowanego u\.{z}ytkownika,
+czerwony -- termin zaj\k{e}ty przez inn\k{a} osob\k{e},
+szary -- termin wolny do zarezerwowania.
+
+Panel filtr\'{o}w po lewej stronie pozwala administratorowi ograniczy\'{c}
+widok do wybranego kursanta, instruktora lub pojazdu.
+Przyciski \textbf{Wstecz}, \textbf{Dzi\'{s}} i~\textbf{Dalej}
+umo\.{z}liwiaj\k{a} nawigacj\k{e} po kolejnych tygodniach.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{img/kalendarz_admin}
+  \caption{Kalendarz rezerwacji -- widok administratora}
+  \label{fig:kalendarz_admin}
+\end{figure}
+
+Kursant (rys.~\ref{fig:kalendarz_kursant}) widzi wy\l{}\k{a}cznie w\l{}asne
+zarezerwowane jazdy oraz wolne terminy, kt\'{o}re mo\.{z}e zarezerwowa\'{c}.
+Klikni\k{e}cie zaj\k{e}tego terminu otwiera okno potwierdzenia
+odwo\l{}ania jazdy (rys.~\ref{fig:odwolaj}).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{img/kalendarz_kursant}
+  \caption{Kalendarz rezerwacji -- widok kursanta}
+  \label{fig:kalendarz_kursant}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{img/odwolaj}
+  \caption{Okno potwierdzenia odwo\l{}ania rezerwacji}
+  \label{fig:odwolaj}
+\end{figure}
+
+% -----------------------------------------------------------------------
+\section{Przyk\l{}adowy scenariusz dzia\l{}ania}
+% -----------------------------------------------------------------------
+
+Poni\.{z}ej przedstawiono typowy scenariusz u\.{z}ycia systemu przez trzech
+r\'{o}\.{z}nych u\.{z}ytkownik\'{o}w:
+
+\begin{enumerate}
+  \item Administrator loguje si\k{e} do systemu, dodaje nowego kursanta
+        wype\l{}niaj\k{a}c formularz z~numerem PESEL, loginem i~has\l{}em.
+        System automatycznie sprawdza poprawno\'{s}\'{c} PESEL i~unikalno\'{s}\'{c}
+        loginu.
+  \item Administrator przypisuje do systemu instruktora z~uprawnieniami
+        kategorii B~i~C, a~nast\k{e}pnie dodaje pojazd do floty szkoleniowej.
+  \item Kursant loguje si\k{e} do aplikacji, otwiera kalendarz i~wybiera
+        wolny termin w~przysz\l{}ym tygodniu. System automatycznie dobiera
+        dost\k{e}pnych instruktor\'{o}w i~pojazdy pasuj\k{a}ce do kategorii
+        prawa jazdy kursanta. Kursant potwierdza rezerwacj\k{e}.
+  \item Instruktor loguje si\k{e} i~sprawdza sw\'{o}j grafik na dany tydzie\'{n}
+        -- widzi zaplanowane terminy jazd.
+\end{enumerate}
+
+% -----------------------------------------------------------------------
+\section{Scenariusze testowania}
+% -----------------------------------------------------------------------
+
+Testowanie aplikacji przeprowadzono r\k{e}cznie, sprawdzaj\k{a}c poprawno\'{s}\'{c}
+dzia\l{}ania g\l{}\'{o}wnych funkcji systemu.
+
+\begin{table}[H]
+\centering
+\caption{Scenariusze testowania aplikacji}
+\label{tab:testy}
+\begin{tabularx}{\linewidth}{|X|X|l|}
+\hline
+\textbf{Scenariusz} & \textbf{Oczekiwany rezultat} & \textbf{Wynik} \\
+\hline
+Logowanie z~b\l{}\k{e}dnymi danymi & Komunikat ,,Niepoprawny login lub has\l{}o'' & OK \\
+\hline
+Dodanie kursanta z~b\l{}\k{e}dnym numerem PESEL & Komunikat o~nieprawid\l{}owym numerze PESEL & OK \\
+\hline
+Dodanie kursanta z~ju\.{z} istniej\k{a}cym loginem & Komunikat o~zaj\k{e}tym loginie & OK \\
+\hline
+Rezerwacja jazdy na termin z~przesz\l{}o\'{s}ci & Komunikat o~nieprawid\l{}owym terminie & OK \\
+\hline
+Pr\'{o}ba usuni\k{e}cia kursanta z~zaplanowanymi jazdami & Blokada usuni\k{e}cia z~komunikatem & OK \\
+\hline
+\end{tabularx}
+\end{table}
+\vspace{-\baselineskip}
+
+Wszystkie przetestowane scenariusze dzia\l{}aj\k{a} zgodnie z~oczekiwaniami.

@@ -1,0 +1,126 @@
+\chapter{Implementacja aplikacji}
+\label{ch:implementacja}
+
+\section{System uwierzytelniania}
+
+Okno logowania (\texttt{LoginWindow}) pobiera login, has\l{}o i~wybran\k{a} rol\k{e}
+z~formularza. Nast\k{e}pnie wyszukuje rekord w~odpowiedniej tabeli bazy danych
+i~weryfikuje has\l{}o metod\k{a} \texttt{BCrypt.Verify}. Fragment kodu
+przedstawia Listing~\ref{lst:login}.
+
+\begin{lstlisting}[language={[Sharp]C}, caption={Weryfikacja has\l{}a bcrypt podczas logowania}, label=lst:login]
+var kursant = context.Kursanci
+    .FirstOrDefault(k => k.Login == login);
+if (kursant != null
+    && BCrypt.Net.BCrypt.Verify(haslo, kursant.Haslo))
+{
+    OtworzMainWindow("Kursant", login);
+    return;
+}
+\end{lstlisting}
+
+\section{Walidacja numeru PESEL}
+
+Przy dodawaniu lub edycji kursanta sprawdzana jest poprawno\'{s}\'{c} numeru PESEL.
+Algorytm weryfikuje 11-cyfrow\k{a} d\l{}ugo\'{s}\'{c}, cyfrow\'{s}\'{c} wszystkich znak\'{o}w
+oraz sum\k{e} kontroln\k{a} opart\k{a} na wagach \texttt{\{1,3,7,9,1,3,7,9,1,3\}}.
+
+\begin{lstlisting}[language={[Sharp]C}, caption={Algorytm weryfikacji sumy kontrolnej PESEL}, label=lst:pesel]
+private static bool WalidujSumeKontrolnaPesel(string pesel)
+{
+    int[] wagi = { 1, 3, 7, 9, 1, 3, 7, 9, 1, 3 };
+    int suma = 0;
+    for (int i = 0; i < 10; i++)
+        suma += (pesel[i] - '0') * wagi[i];
+    int cyfraKontrolna = (10 - (suma % 10)) % 10;
+    return cyfraKontrolna == (pesel[10] - '0');
+}
+\end{lstlisting}
+
+\section{Ochrona przed wy\'{s}cigiem danych (TOCTOU)}
+
+Operacja usuni\k{e}cia rekordu realizowana jest w~dw\'{o}ch etapach: najpierw
+wy\'{s}wietlane jest pytanie potwierdzaj\k{a}ce, a~nast\k{e}pnie -- po
+potwierdzeniu przez u\.{z}ytkownika -- otwierany jest nowy kontekst bazy,
+w~kt\'{o}rym wykonywane s\k{a} oba kroki: pobranie rekordu i~jego usuni\k{e}cie.
+Poniewa\.{z} aplikacja przeznaczona jest do u\.{z}ytku lokalnego z~jedn\k{a}
+aktywn\k{a} sesj\k{a} (por. rozdzia\l{}~\ref{ch:wymagania}), ryzyko
+r\'{o}wnoczesnej modyfikacji przez innego u\.{z}ytkownika nie wyst\k{e}puje.
+Zastosowane podej\'{s}cie zabezpiecza przed sytuacj\k{a}, w~kt\'{o}rej rekord
+m\'{o}g\l{}by zosta\'{c} ju\.{z} usuni\k{e}ty w~tle mi\k{e}dzy wy\'{s}wietleniem
+pytania a~faktycznym wykonaniem operacji.
+
+\begin{lstlisting}[language={[Sharp]C}, caption={Zabezpieczenie przed wy\'{s}cigiem danych przy usuwaniu}, label=lst:toctou]
+var wynik = MessageBox.Show("Czy na pewno usunac kursanta?",
+    "Potwierdzenie", MessageBoxButton.YesNo, MessageBoxImage.Question);
+if (wynik != MessageBoxResult.Yes) return;
+
+using var context = new OskDbContext();
+var doUsuniecia = context.Kursanci.Find(kursant.Id);
+if (doUsuniecia == null)
+{
+    MessageBox.Show("Kursant nie istnieje w bazie.",
+        "Blad", MessageBoxButton.OK, MessageBoxImage.Warning);
+    return;
+}
+context.Kursanci.Remove(doUsuniecia);
+context.SaveChanges();
+\end{lstlisting}
+
+\section{Kalendarz rezerwacji}
+
+Kalendarz tygodniowy wy\'{s}wietla terminy jazd w~zakresie godzinowym 8--18
+dla ka\.{z}dego dnia roboczego. Ka\.{z}dy termin ma przypisany kolor
+okre\'{s}laj\k{a}cy jego status -- zaj\k{e}ty lub wolny.
+Administrator mo\.{z}e filtrowa\'{c} widok kalendarza po kursancie,
+instruktorze lub poje\'{z}dzie. Ka\.{z}da zmiana filtra od\'{s}wie\.{z}a
+wy\'{s}wietlane terminy.
+
+\section{Unikalność login\'{o}w przy edycji}
+
+Podczas edycji konta sprawdzane jest, czy nowy login nie jest ju\.{z} u\.{z}ywany
+przez inn\k{a} osob\k{e}. W\l{}asny login jest przy tym pomijany, dzi\k{e}ki czemu
+edycja bez zmiany loginu nie powoduje b\l{}\k{e}du:
+
+\begin{lstlisting}[language={[Sharp]C}, caption={Sprawdzanie unikalności loginu przy edycji}, label=lst:unique_login]
+bool loginZajety = context.Kursanci.Any(
+    k2 => k2.Login == NowyLogin && k2.Id != edytowany.Id);
+if (loginZajety)
+{
+    MessageBox.Show("Podany login jest juz zajety.",
+        "Blad walidacji", MessageBoxButton.OK, MessageBoxImage.Warning);
+    return;
+}
+\end{lstlisting}
+
+\section{Realizacja operacji CRUD}
+
+Ka\.{z}dy modu\l{} zarz\k{a}dzania (kursanci, instruktorzy, pojazdy)
+realizuje pe\l{}ny zestaw operacji CRUD:
+\begin{itemize}
+  \item \textbf{Create} -- formularz w~oknie dialogowym, zapis do bazy po walidacji danych.
+  \item \textbf{Read} -- \l{}adowanie i~wy\'{s}wietlanie danych przy otwarciu widoku.
+  \item \textbf{Update} -- otwarcie okna edycji z~wype\l{}nionymi danymi,
+        zapis zmienionego rekordu.
+  \item \textbf{Delete} -- potwierdzenie operacji przez u\.{z}ytkownika,
+        usuni\k{e}cie rekordu z~bazy z~zachowaniem regu\l{} integralno\'{s}ci.
+\end{itemize}
+
+\section{Organizacja nawigacji}
+
+Po zalogowaniu otwierane jest g\l{}\'{o}wne okno (\texttt{MainWindow})
+z~bocznym menu. Ka\.{z}dy przycisk menu podmienia zawarto\'{s}\'{c} centralnego
+obszaru na odpowiedni widok. Widoczno\'{s}\'{c} przycisk\'{o}w jest
+kontrolowana na podstawie roli -- kursant i~instruktor widz\k{a} tylko
+w\l{}asne opcje, administrator ma dost\k{e}p do wszystkich modu\l{}\'{o}w.
+Okna dialogowe (dodawanie, edycja, potwierdzenie usuni\k{e}cia) otwierane
+s\k{a} jako modalne -- blokuj\k{a} g\l{}\'{o}wne okno do czasu zamkni\k{e}cia.
+
+\section{Interfejs u\.{z}ytkownika i stylizacja}
+
+Interfejs zaprojektowany zosta\l{} z~my\'{s}l\k{a} o~czytelno\'{s}ci i~prostocie
+obs\l{}ugi. Zastosowano neutraln\k{a} kolorystyk\k{e} -- bia\l{}e t\l{}o,
+ciemnoszare nag\l{}\'{o}wki i~kolorowe wyr\'{o}\.{z}nienia status\'{o}w
+w~kalendarzu (zielony/czerwony/szary). Uk\l{}ady okien zdefiniowano
+w~XAML z~u\.{z}yciem \texttt{Grid} i~\texttt{StackPanel}, co zapewnia
+prawid\l{}owe skalowanie przy r\'{o}\.{z}nych rozdzielczo\'{s}ciach ekranu.

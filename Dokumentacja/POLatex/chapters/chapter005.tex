@@ -1,0 +1,43 @@
+\chapter{Projekt bazy danych}
+\label{ch:baza}
+
+Baza danych systemu sk\l{}ada si\k{e} z~pi\k{e}ciu tabel: \texttt{Kursanci},
+\texttt{Instruktorzy}, \texttt{Pojazdy}, \texttt{RezerwacjeJazd}
+i~\texttt{Administratorzy}. Tabela \texttt{RezerwacjeJazd} jest tabel\k{a}
+centraln\k{a} -- {\l}\k{a}czy ze sob\k{a} pozosta\l{}e trzy przez powi\k{a}zania.
+
+\section{Diagram ERD}
+\label{sec:erd}
+
+Poni\.{z}szy diagram przedstawia struktur\k{e} bazy danych oraz powi\k{a}zania
+mi\k{e}dzy tabelami.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{img/erd}
+  \caption{Diagram ERD bazy danych systemu OSK}
+  \label{fig:erd}
+\end{figure}
+
+\section{Normalizacja}
+
+Schemat bazy danych spe\l{}nia trzeci\k{a} posta\'{c} normaln\k{a} (3NF).
+Ka\.{z}da tabela przechowuje dane dotycz\k{a}ce tylko jednego obiektu:
+osobno kursanci, osobno instruktorzy, osobno pojazdy. Powi\k{a}zania
+mi\k{e}dzy nimi realizowane s\k{a} przez klucze obce w~tabeli rezerwacji,
+bez powt\'{o}rzenia danych.
+
+\section{Relacje i integralno\'{s}\'{c} danych}
+
+Ka\.{z}da rezerwacja musi by\'{c} powi\k{a}zana z~istniej\k{a}cym kursantem,
+instruktorem i~pojazdem. System blokuje usuni\k{e}cie kursanta, instruktora
+lub pojazdu, je\.{z}eli ma on przypisane jazdy w~systemie -- zapobiega to
+przypadkowej utracie danych.
+
+Loginy u\.{z}ytkownik\'{o}w oraz numer PESEL kursanta musz\k{a} by\'{c}
+unikalne. Wymuszane jest to na poziomie bazy danych, co uniemo\.{z}liwia
+duplikaty nawet przy jednoczesnym dost\k{e}pie.
+
+Struktura bazy zosta\l{}a utworzona przy u\.{z}yciu mechanizmu migracji --
+zmiany schematu s\k{a} wersjonowane i~mo\.{z}na je w~ka\.{z}dej chwili
+odtworzy\'{c}.
