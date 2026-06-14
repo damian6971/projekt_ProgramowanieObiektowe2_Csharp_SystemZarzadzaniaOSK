@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="OskSystem.Views.KursanciView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="900"
+             Background="#F3F4F6">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Zarządzanie Kursantami" FontSize="26" FontWeight="Bold" Foreground="#1E293B" VerticalAlignment="Center"/>
+            <Button Grid.Column="1" Content="+ Dodaj Kursanta" Width="160" Height="40" Background="#10B981" Foreground="White" FontSize="15" FontWeight="Bold" Cursor="Hand" Click="BtnOtworzDodawanie_Click">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="6"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </Grid>
+        <DataGrid Grid.Row="1" HorizontalAlignment="Left" ItemsSource="{Binding ListaKursantow}" AutoGenerateColumns="False" CanUserAddRows="False"
+                  Background="White" RowHeight="50" BorderThickness="0" FontSize="14">
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Background" Value="#F8FAFC"/>
+                    <Setter Property="FontWeight" Value="SemiBold"/>
+                    <Setter Property="Padding" Value="10,15"/>
+                    <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                    <Setter Property="BorderBrush" Value="#E2E8F0"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Imię" Binding="{Binding Imie}" Width="150"/>
+                <DataGridTextColumn Header="Nazwisko" Binding="{Binding Nazwisko}" Width="150"/>
+                <DataGridTextColumn Header="Kat." Binding="{Binding Kategoria}" Width="60"/>
+                <DataGridTextColumn Header="PESEL" Binding="{Binding Pesel}" Width="140"/>
+                <DataGridTemplateColumn Header="Akcje" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <Button Content="Edytuj" Width="70" Height="32" Margin="5,0" Click="BtnEdytuj_Click" Background="#F59E0B" Foreground="White" BorderThickness="0" Cursor="Hand">
+                                    <Button.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="4"/>
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
+                                <Button Content="Usuń" Width="70" Height="32" Margin="5,0" Click="BtnUsun_Click" Background="#EF4444" Foreground="White" BorderThickness="0" Cursor="Hand">
+                                    <Button.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="4"/>
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

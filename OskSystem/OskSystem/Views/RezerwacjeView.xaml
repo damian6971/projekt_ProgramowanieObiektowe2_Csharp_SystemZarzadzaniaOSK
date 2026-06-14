@@ -1,0 +1,204 @@
+<UserControl x:Class="OskSystem.Views.RezerwacjeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="#F3F4F6">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="{Binding TytulWidoku}"
+                   FontSize="22" FontWeight="Bold" Foreground="#1E293B" Margin="0,0,0,12"/>
+
+        <!-- Panel wyboru — ukryty dla instruktora -->
+        <Border Grid.Row="1" Background="White" CornerRadius="6" Padding="12" Margin="0,0,0,10"
+                Visibility="{Binding WidocznoscPaneluWyboru}">
+            <StackPanel>
+                <TextBlock Text="Wybierz uczestników jazdy:" FontWeight="SemiBold" Foreground="#475569" Margin="0,0,0,8"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="0,0,8,0" Visibility="{Binding WidocznoscKursanta}">
+                        <TextBlock Text="Kursant" FontSize="11" Foreground="#64748B" Margin="0,0,0,3"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ComboBox Grid.Column="0" Height="30" ItemsSource="{Binding DostepniKursanci}"
+                                      SelectedItem="{Binding WybranyKursant}"
+                                      DisplayMemberPath="PelneDane"
+                                      IsEnabled="{Binding CzyMozeZmienicKursanta}"/>
+                            <Button Grid.Column="1" Content="✕" Width="28" Height="30" Margin="3,0,0,0"
+                                    Background="#E2E8F0" BorderThickness="0" Cursor="Hand"
+                                    Click="BtnWyczyscKursanta_Click"/>
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Margin="0,0,8,0">
+                        <TextBlock Text="Instruktor" FontSize="11" Foreground="#64748B" Margin="0,0,0,3"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ComboBox Grid.Column="0" Height="30" ItemsSource="{Binding PrzefiltrowaniInstruktorzy}"
+                                      SelectedItem="{Binding WybranyInstruktor}"
+                                      DisplayMemberPath="PelneDane"/>
+                            <Button Grid.Column="1" Content="✕" Width="28" Height="30" Margin="3,0,0,0"
+                                    Background="#E2E8F0" BorderThickness="0" Cursor="Hand"
+                                    Click="BtnWyczyscInstruktora_Click"/>
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Pojazd" FontSize="11" Foreground="#64748B" Margin="0,0,0,3"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ComboBox Grid.Column="0" Height="30" ItemsSource="{Binding PrzefiltrowanePojazdy}"
+                                      SelectedItem="{Binding WybranyPojazd}"
+                                      DisplayMemberPath="PelneDane"/>
+                            <Button Grid.Column="1" Content="✕" Width="28" Height="30" Margin="3,0,0,0"
+                                    Background="#E2E8F0" BorderThickness="0" Cursor="Hand"
+                                    Click="BtnWyczyscPojazdu_Click"/>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <!-- Nawigacja tygodnia -->
+        <Border Grid.Row="2" Background="White" CornerRadius="6" Padding="10,8" Margin="0,0,0,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="◀ Poprzedni tydzień" Height="32" Padding="10,0"
+                        Background="#E2E8F0" BorderThickness="0" Cursor="Hand"
+                        Click="BtnWstecz_Click" Margin="0,0,6,0"/>
+                <Button Grid.Column="1" Content="Dziś" Height="32" Padding="10,0"
+                        Background="#3B82F6" Foreground="White" BorderThickness="0" Cursor="Hand"
+                        Click="BtnDzisiaj_Click" Margin="0,0,6,0"/>
+                <Button Grid.Column="2" Content="Następny tydzień ▶" Height="32" Padding="10,0"
+                        Background="#E2E8F0" BorderThickness="0" Cursor="Hand"
+                        Click="BtnDalej_Click"/>
+                <TextBlock Grid.Column="3" Text="{Binding TydzienNapis}"
+                           FontSize="13" FontWeight="SemiBold" Foreground="#1E293B"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <StackPanel Grid.Column="4" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Width="12" Height="12" Background="#DCFCE7" CornerRadius="2" Margin="0,0,4,0"/>
+                    <TextBlock Text="Wolny" FontSize="11" Foreground="#64748B" Margin="0,0,10,0"/>
+                    <Border Width="12" Height="12" Background="#E2E8F0" CornerRadius="2" Margin="0,0,4,0"/>
+                    <TextBlock Text="Zajęty" FontSize="11" Foreground="#64748B" Margin="0,0,10,0"/>
+                    <Border Width="12" Height="12" Background="#F97316" CornerRadius="2" Margin="0,0,4,0"/>
+                    <TextBlock Text="Twoja jazda" FontSize="11" Foreground="#64748B"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Kalendarz — responsywny UniformGrid -->
+        <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Disabled"
+                      HorizontalScrollBarVisibility="Disabled" Margin="0,0,0,10">
+            <ItemsControl ItemsSource="{Binding Dni}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Rows="1"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="White" CornerRadius="6" Margin="0,0,6,0">
+                            <StackPanel>
+                                <Border Background="#1E293B" CornerRadius="6,6,0,0" Padding="8,6">
+                                    <TextBlock Text="{Binding NazwaDnia}" FontSize="11"
+                                               FontWeight="SemiBold" Foreground="White"
+                                               TextWrapping="Wrap" TextAlignment="Center"/>
+                                </Border>
+                                <ItemsControl ItemsSource="{Binding Sloty}" Margin="4">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Button Height="80" Margin="0,2" BorderThickness="0"
+                                                    Cursor="Hand" IsEnabled="{Binding MoznaKliknacLubMoja}"
+                                                    Click="BtnSlot_Click" Tag="{Binding}"
+                                                    ToolTip="{Binding ZajetePrzez}">
+                                                <Button.Style>
+                                                    <Style TargetType="Button">
+                                                        <Setter Property="Background" Value="{Binding Kolor}"/>
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="Button">
+                                                                    <Border Background="{TemplateBinding Background}"
+                                                                            CornerRadius="4" BorderThickness="1"
+                                                                            BorderBrush="#E2E8F0">
+                                                                        <ContentPresenter HorizontalAlignment="Center"
+                                                                                          VerticalAlignment="Center"/>
+                                                                    </Border>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Style>
+                                                </Button.Style>
+                                                <StackPanel HorizontalAlignment="Center" Margin="4,2">
+                                                    <TextBlock Text="{Binding GodzinaTekst}"
+                                                               FontSize="11" FontWeight="SemiBold"
+                                                               Foreground="{Binding KolorTekstu}"
+                                                               HorizontalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Opis}" FontSize="10"
+                                                               Foreground="{Binding KolorTekstu}"
+                                                               HorizontalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding SzczegolyJazdy}"
+                                                               FontSize="9"
+                                                               Foreground="{Binding KolorTekstu}"
+                                                               HorizontalAlignment="Center"
+                                                               TextWrapping="Wrap"
+                                                               TextAlignment="Center"/>
+                                                </StackPanel>
+                                            </Button>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- Pasek dolny -->
+        <Border Grid.Row="4" Background="White" CornerRadius="6" Padding="12,8">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="Wybrany termin: " FontSize="12" Foreground="#64748B" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding WybranyTerminTekst}" FontSize="12" FontWeight="SemiBold"
+                               Foreground="#1E293B" VerticalAlignment="Center"/>
+                </StackPanel>
+                <Button Grid.Column="1" Content="✓  Zarezerwuj jazdę" Height="36" Padding="16,0"
+                        Background="#22C55E" Foreground="White" FontSize="13" FontWeight="Bold"
+                        BorderThickness="0" Cursor="Hand" Visibility="{Binding WidocznoscDodawania}"
+                        Click="BtnZarezerwuj_Click">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="6"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

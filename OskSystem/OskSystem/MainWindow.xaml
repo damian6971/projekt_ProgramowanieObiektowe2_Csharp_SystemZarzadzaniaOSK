@@ -1,0 +1,32 @@
+﻿<Window x:Class="OskSystem.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="OSK System" Height="700" Width="1300" WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Background="#1E293B">
+            <StackPanel Margin="10,20,10,10">
+                <TextBlock Text="MENU OSK" Foreground="White" FontSize="22" FontWeight="Bold" Margin="0,0,0,30" HorizontalAlignment="Center"/>
+
+                <Button x:Name="BtnKursanci" Content="Kursanci" Height="45" Margin="0,5" Background="#334155" Foreground="White" FontSize="16" BorderThickness="0" Cursor="Hand" Click="BtnKursanci_Click"/>
+                <Button x:Name="BtnInstruktorzy" Content="Instruktorzy" Height="45" Margin="0,5" Background="#334155" Foreground="White" FontSize="16" BorderThickness="0" Cursor="Hand" Click="BtnInstruktorzy_Click"/>
+                <Button x:Name="BtnPojazdy" Content="Pojazdy" Height="45" Margin="0,5" Background="#334155" Foreground="White" FontSize="16" BorderThickness="0" Cursor="Hand" Click="BtnPojazdy_Click"/>
+                <Button x:Name="BtnJazdy" Content="Jazdy (Harmonogram)" Height="45" Margin="0,5" Background="#334155" Foreground="White" FontSize="16" BorderThickness="0" Cursor="Hand"  Click="BtnJazdy_Click"/>
+
+                <Border BorderBrush="#475569" BorderThickness="0,1,0,0" Margin="0,20,0,10" />
+                <Button Content="Wyloguj się" Height="45" Background="#DC2626" Foreground="White" FontSize="16" BorderThickness="0" Cursor="Hand" Click="BtnWyloguj_Click"/>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Column="1" Background="#F3F4F6">
+            <ContentControl x:Name="GlownyObszar">
+                <TextBlock x:Name="TxtPowitanie" Text="Witaj w systemie!" FontSize="28" FontWeight="SemiBold" Foreground="#475569" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </ContentControl>
+        </Border>
+    </Grid>
+</Window>

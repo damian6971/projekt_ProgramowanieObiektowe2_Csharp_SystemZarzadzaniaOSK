@@ -1,0 +1,23 @@
+<Window x:Class="OskSystem.Views.DodajKursantaWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Dane Kursanta" Width="350" Height="580" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    <Border Padding="20">
+        <StackPanel>
+            <TextBlock Text="Formularz Kursanta" FontSize="20" FontWeight="Bold" Margin="0,0,0,20" HorizontalAlignment="Center"/>
+            <TextBlock Text="Imię*"/>
+            <TextBox Height="30" Text="{Binding NowyImie}" Margin="0,5,0,10"/>
+            <TextBlock Text="Nazwisko*"/>
+            <TextBox Height="30" Text="{Binding NowyNazwisko}" Margin="0,5,0,10"/>
+            <TextBlock Text="Kategoria Prawa Jazdy"/>
+            <ComboBox Height="30" ItemsSource="{Binding DostepneKategorie}" SelectedItem="{Binding WybranaKategoria}" Margin="0,5,0,10"/>
+            <TextBlock Text="PESEL* (11 cyfr)"/>
+            <TextBox Height="30" Text="{Binding NowyPesel}" MaxLength="11" Margin="0,5,0,10"/>
+            <TextBlock Text="Login"/>
+            <TextBox Height="30" Text="{Binding NowyLogin}" Margin="0,5,0,10"/>
+            <TextBlock Text="Hasło (pozostaw puste aby nie zmieniać)"/>
+            <PasswordBox x:Name="PbHaslo" Height="30" Margin="0,5,0,20" PasswordChanged="PbHaslo_PasswordChanged"/>
+            <Button Content="Zapisz" Height="40" Background="#2563EB" Foreground="White" Click="BtnZapisz_Click"/>
+        </StackPanel>
+    </Border>
+</Window>

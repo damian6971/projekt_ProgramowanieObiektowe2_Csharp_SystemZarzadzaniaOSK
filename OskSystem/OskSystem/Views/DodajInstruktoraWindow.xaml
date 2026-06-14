@@ -1,0 +1,78 @@
+<Window x:Class="OskSystem.Views.DodajInstruktoraWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Dane Instruktora" Width="380" Height="520" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    <Border Padding="20">
+        <StackPanel>
+            <TextBlock Text="Formularz Instruktora" FontSize="18" FontWeight="Bold" Margin="0,0,0,12" HorizontalAlignment="Center"/>
+
+            <!-- Imię i Nazwisko obok siebie -->
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="8"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Imię*" FontSize="12"/>
+                    <TextBox Height="28" Text="{Binding NowyImie}" Margin="0,3,0,0"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="Nazwisko*" FontSize="12"/>
+                    <TextBox Height="28" Text="{Binding NowyNazwisko}" Margin="0,3,0,0"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- Uprawnienia -->
+            <TextBlock Text="Uprawnienia instruktorskie*" Foreground="#64748B" FontSize="12" Margin="0,0,0,4"/>
+            <ItemsControl ItemsSource="{Binding DostepneUprawnienia}" Margin="0,0,0,10">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox Content="{Binding Nazwa}" IsChecked="{Binding IsSelected}" Margin="0,0,12,4" Cursor="Hand" Foreground="#1E293B" FontSize="12"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!-- Nr Legitymacji i Telefon obok siebie -->
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="8"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Nr Legitymacji*" FontSize="12"/>
+                    <TextBox Height="28" Text="{Binding NowyNumerLegitymacji}" Margin="0,3,0,0"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="Telefon" FontSize="12"/>
+                    <TextBox Height="28" Text="{Binding NowyTelefon}" Margin="0,3,0,0"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- Login i Hasło obok siebie -->
+            <Grid Margin="0,0,0,14">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="8"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Login" FontSize="12"/>
+                    <TextBox Height="28" Text="{Binding NowyLogin}" Margin="0,3,0,0"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="Hasło*" FontSize="12"/>
+                    <PasswordBox x:Name="PbHaslo" Height="28" Margin="0,3,0,0" PasswordChanged="PbHaslo_PasswordChanged"/>
+                </StackPanel>
+            </Grid>
+
+            <Button Content="Zapisz" Height="38" Background="#3B82F6" Foreground="White" FontSize="14" Click="BtnZapisz_Click"/>
+        </StackPanel>
+    </Border>
+</Window>
